@@ -1,14 +1,12 @@
-import defaults from 'lodash/defaults';
-
-import React, { ChangeEvent, PureComponent } from 'react';
-import { Button, LegacyForms } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
+import { Button, LegacyForms } from '@grafana/ui';
+import React, { ChangeEvent, PureComponent } from 'react';
 import { DataSource } from './datasource';
-import { defaultQuery, MyDataSourceOptions, MyQuery } from './types';
+import { RallyDataSourceOptions, RallyQuery } from './types';
 
 const { FormField } = LegacyForms;
 
-type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
+type Props = QueryEditorProps<DataSource, RallyQuery, RallyDataSourceOptions>;
 
 export class QueryEditor extends PureComponent<Props> {
   onProjectChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,13 +17,13 @@ export class QueryEditor extends PureComponent<Props> {
   onStoryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     const newVal = event.target.value;
-    onChange({ ...query, story: newVal ? parseInt(newVal, 10) : undefined });
+    onChange({ ...query, storyId: newVal ? parseInt(newVal, 10) : undefined });
   };
 
   onDefectChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     const newVal = event.target.value;
-    onChange({ ...query, defect: newVal ? parseInt(newVal, 10) : undefined });
+    onChange({ ...query, defectId: newVal ? parseInt(newVal, 10) : undefined });
   };
 
   onExecute = () => {
@@ -34,14 +32,13 @@ export class QueryEditor extends PureComponent<Props> {
   };
 
   render() {
-    const query = defaults(this.props.query, defaultQuery);
-    const { project, story, defect } = query;
+    const { project, storyId, defectId } = this.props.query;
 
     return (
       <div className="gf-form">
         <FormField width={8} value={project} onChange={this.onProjectChange} label="Project" />
-        <FormField width={8} value={story} onChange={this.onStoryChange} label="Story Id" type="number" step="1" />
-        <FormField width={8} value={defect} onChange={this.onDefectChange} label="Defect Id" type="number" step="1" />
+        <FormField width={8} value={storyId} onChange={this.onStoryChange} label="Story Id" type="number" step="1" />
+        <FormField width={8} value={defectId} onChange={this.onDefectChange} label="Defect Id" type="number" step="1" />
         <Button onClick={this.onExecute}>Execute</Button>
       </div>
     );

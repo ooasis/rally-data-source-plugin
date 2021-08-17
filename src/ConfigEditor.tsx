@@ -1,11 +1,11 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { LegacyForms } from '@grafana/ui';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { MyDataSourceOptions, MySecureJsonData } from './types';
+import { RallyDataSourceOptions, RallySecureJsonData } from './types';
 
 const { SecretFormField, FormField } = LegacyForms;
 
-interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> {}
+interface Props extends DataSourcePluginOptionsEditorProps<RallyDataSourceOptions> {}
 
 interface State {}
 
@@ -48,15 +48,15 @@ export class ConfigEditor extends PureComponent<Props, State> {
   render() {
     const { options } = this.props;
     const { jsonData, secureJsonFields } = options;
-    const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
+    const secureJsonData = (options.secureJsonData || {}) as RallySecureJsonData;
 
     return (
       <div className="gf-form-group">
         <div className="gf-form">
           <FormField
             label="API Endpoint"
-            labelWidth={10}
-            inputWidth={40}
+            labelWidth={8}
+            inputWidth={20}
             onChange={this.onEndpointChange}
             value={jsonData.apiEndpoint || 'https://rally1.rallydev.com/slm/webservice/v2.0'}
           />
@@ -69,7 +69,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
               value={secureJsonData.apiKey || ''}
               label="API Key"
               placeholder="api key"
-              labelWidth={10}
+              labelWidth={8}
               inputWidth={20}
               onReset={this.onResetAPIKey}
               onChange={this.onAPIKeyChange}

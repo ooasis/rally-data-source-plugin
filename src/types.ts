@@ -1,23 +1,21 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
 
-export interface MyQuery extends DataQuery {
+export interface RallyQuery extends DataQuery {
   project?: string;
-  story?: number;
-  defect?: number;
+  storyId?: number;
+  defectId?: number;
 }
-
-export const defaultQuery: Partial<MyQuery> = {};
 
 /**
  * These are options configured for each DataSource instance
  */
-export interface MyDataSourceOptions extends DataSourceJsonData {
+export interface RallyDataSourceOptions extends DataSourceJsonData {
   apiEndpoint: string;
 }
 
 /**
  * Value that is used in the backend, but never sent over HTTP to the frontend
  */
-export interface MySecureJsonData {
+export interface RallySecureJsonData {
   apiKey: string;
 }
