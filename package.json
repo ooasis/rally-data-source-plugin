@@ -10,7 +10,7 @@
     "sign": "grafana-toolkit plugin:sign",
     "start": "yarn watch"
   },
-  "author": "Hang Sun",
+  "author": "Harry Sun",
   "license": "Apache-2.0",
   "devDependencies": {
     "@grafana/data": "8.1.1",
