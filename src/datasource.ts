@@ -44,7 +44,7 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
 
   async fetchStory(q: RallyQuery) {
     const params = {
-      fetch: 'FormattedID,Name,ObjectId,LastUpdateDate',
+      fetch: 'FormattedID,Name,ObjectID,LastUpdateDate',
     };
     const frame = new MutableDataFrame({
       fields: [
@@ -54,13 +54,13 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
       ],
     });
     const extractor = (r: any) => [r.FormattedID, r.Name, q.storyId];
-    this.fetchEntities(`/hierarchicalrequirement/${q.storyId}`, frame, extractor, params);
+    await this.fetchEntities(`/hierarchicalrequirement/${q.storyId}`, frame, extractor, params);
     return frame;
   }
 
   async fetchDefect(q: RallyQuery) {
     const params = {
-      fetch: 'FormattedID,Name,ObjectId,LastUpdateDate',
+      fetch: 'FormattedID,Name,ObjectID,LastUpdateDate',
     };
     const frame = new MutableDataFrame({
       fields: [
@@ -70,7 +70,7 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
       ],
     });
     const extractor = (r: any) => [r.FormattedID, r.Name, q.defectId];
-    this.fetchEntities(`/defect/${q.defectId}`, frame, extractor, params);
+    await this.fetchEntities(`/defect/${q.defectId}`, frame, extractor, params);
     return frame;
   }
 
@@ -80,7 +80,7 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
       query,
       order: 'LastUpdateDate desc',
       pagesize: 2000,
-      fetch: 'FormattedID,Name,ObjectId,LastUpdateDate',
+      fetch: 'FormattedID,Name,ObjectID,LastUpdateDate',
     };
     const frame = new MutableDataFrame({
       fields: [
@@ -91,11 +91,11 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
       ],
     });
 
-    let storyExtractor = (r: any) => [r.FormattedID, r.Name, r.ObjectId, 'userstory'];
-    this.fetchEntities(`/hierarchicalrequirement`, frame, storyExtractor, params);
+    let storyExtractor = (r: any) => [r.FormattedID, r.Name, r.ObjectID, 'userstory'];
+    await this.fetchEntities(`/hierarchicalrequirement`, frame, storyExtractor, params);
 
-    let defectExtractor = (r: any) => [r.FormattedID, r.Name, r.ObjectId, 'defect'];
-    this.fetchEntities(`/defect`, frame, defectExtractor, params);
+    let defectExtractor = (r: any) => [r.FormattedID, r.Name, r.ObjectID, 'defect'];
+    await this.fetchEntities(`/defect`, frame, defectExtractor, params);
 
     return frame;
   }
@@ -113,7 +113,7 @@ export class DataSource extends DataSourceApi<RallyQuery, RallyDataSourceOptions
       ],
     });
     const extractor = (r: any) => [r.Name, r.ObjectID];
-    this.fetchEntities('/project', frame, extractor, params);
+    await this.fetchEntities('/project', frame, extractor, params);
     return frame;
   }
 
